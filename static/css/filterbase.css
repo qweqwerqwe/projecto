@@ -1,0 +1,213 @@
+/* Filter section styles */
+.filter {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    animation: slideIn 0.3s ease;
+}
+
+.filter h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0;
+    padding-right: 1rem;
+    border-right: 2px solid #e2e8f0;
+}
+
+/* Filter items (links and text) */
+.filter a, .filter > div {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    background: #f7fafc;
+    display: inline-block;
+}
+
+.filter a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Active filter values (institution name, student name) */
+.filter > div, .filter span {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+}
+
+/* Add icon for filter values */
+.filter > div::before, .filter span::before {
+    content: "✓";
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Reset filter button */
+.filter a:last-child {
+    background: #fed7d7;
+    color: #e53e3e;
+    margin-left: auto;
+}
+
+.filter a:last-child:hover {
+    background: #e53e3e;
+    color: white;
+    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}
+
+/* Empty state for filter */
+.filter:empty {
+    display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .filter {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+    }
+    
+    .filter h2 {
+        border-right: none;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+    
+    .filter a, .filter > div {
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .filter a:last-child {
+        margin-left: 0;
+    }
+}
+
+/* Alternative card-style filter */
+.filter-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.filter-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #edf2f7;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.filter-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-badge a {
+    text-decoration: none;
+    color: #4a5568;
+}
+
+.filter-badge.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.filter-badge.active a {
+    color: white;
+}
+
+.filter-reset {
+    background: #fed7d7;
+    color: #e53e3e;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-reset:hover {
+    background: #e53e3e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Animation for filter changes */
+@keyframes filterUpdate {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter > * {
+    animation: filterUpdate 0.3s ease;
+}
+
+/* Tooltip for filter items */
+.filter [data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+.filter [data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    background: #2d3748;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    display: none;
+    z-index: 10;
+}
+
+.filter [data-tooltip]:hover:before {
+    display: block;
+}

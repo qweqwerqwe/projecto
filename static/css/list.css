@@ -1,0 +1,242 @@
+/* filterbase.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* List section styles */
+.list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Card styles */
+.list > div {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Card hover effect */
+.list > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Card gradient border effect */
+.list > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.list > div:hover::before {
+    transform: scaleX(1);
+}
+
+/* Title styles */
+.list h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+    transition: color 0.3s ease;
+}
+
+.list > div:hover h3 {
+    color: #667eea;
+}
+
+/* Description text (for projects) */
+.list p {
+    color: #4a5568;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Student name and institution info */
+.list p:first-of-type {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+/* Additional info (phone, address, etc.) */
+.list p:last-of-type {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+/* GitHub link styles */
+.list a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    word-break: break-all;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.list a:hover {
+    color: #764ba2;
+    transform: translateX(5px);
+}
+
+/* GitHub link icon (optional - adds emoji) */
+.list a::before {
+    content: "🔗";
+    font-size: 0.9rem;
+}
+
+/* Select button styles */
+.list .select-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.list .select-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.list .select-btn:active {
+    transform: translateY(0);
+}
+
+/* Empty state */
+.list:empty::before {
+    content: "Ничего не найдено";
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    color: #718096;
+    font-size: 1.1rem;
+    background: white;
+    border-radius: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .list {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem 0;
+    }
+    
+    .list > div {
+        padding: 1.2rem;
+    }
+    
+    .list h3 {
+        font-size: 1.1rem;
+    }
+    
+    .list p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation for cards */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading animation for cards */
+.list > div {
+    animation: fadeIn 0.5s ease backwards;
+}
+
+.list > div:nth-child(1) { animation-delay: 0.05s; }
+.list > div:nth-child(2) { animation-delay: 0.1s; }
+.list > div:nth-child(3) { animation-delay: 0.15s; }
+.list > div:nth-child(4) { animation-delay: 0.2s; }
+.list > div:nth-child(5) { animation-delay: 0.25s; }
+.list > div:nth-child(6) { animation-delay: 0.3s; }
+
+/* Badge for institution type (optional) */
+.list .badge {
+    display: inline-block;
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+/* Phone number styling */
+.list [class*="phone"] {
+    font-family: monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Address styling */
+.list [class*="address"] {
+    font-style: italic;
+    color: #718096;
+}
+
+/* Scrollbar for long content */
+.list {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for list */
+.list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+}

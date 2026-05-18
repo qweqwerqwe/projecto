@@ -1,0 +1,20 @@
+{%extends 'filterbase.html'%}
+
+{%load static%}
+
+{%block title%}Студенты{%endblock%}
+{%block linklist%}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+{%endblock%}
+{%block list%}
+    <section class='list'>
+        {%for student in students%}
+            <div>
+                <h3>{{student.user.last_name}} {{student.user.first_name}}</h3>
+                <p>{{student.institution.name}}</p>
+                <p>{{student.phone_number}}</p>
+                <a href="{%url 'students_filter' id=student.id%}" class="select-btn">Выбрать</a>
+            </div>
+        {%endfor%}
+    </section>
+{%endblock%}

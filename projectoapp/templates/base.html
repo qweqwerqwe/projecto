@@ -1,0 +1,37 @@
+{%load static%}
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css'%}">
+    {%block link%}{%endblock%}
+    <title>{%block title%}{%endblock%}</title>
+    </head>
+    <body>
+        <header>
+            <img src="{% static 'img/logo.png'%}" alt="logo" class='logo'/>
+            <h1>Projecto</h1>
+            {%if user.is_authenticated == False%}
+            <a href="{%url 'login'%}">Войти</a>
+            <a href="{%url 'student_form'%}">Я студент</a>
+            <a href="{%url 'employer_form'%}">Я работодатель</a>
+            {%else%}
+            <p>{{user.last_name}} {{user.first_name}}</p>
+                {%if user.is_superuser == True%}
+                    <a href="{%url 'institution_form'%}">Добавить учебное заведение</a>
+                {%endif%}
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="display: inline; padding: 0;" class='logoutbutton'>
+                    Выйти
+                </button>
+            </form>
+            {%endif%}
+        </header>
+        {%block content%}{%endblock%}
+        <footer>
+            <img src="{% static 'img/logo.png' %}" alt="logo" class='logo'/>
+            <p>Почта технической поддержки: malinka_783513@mail.ru</p>
+        </footer>
+    </body>
+</html>

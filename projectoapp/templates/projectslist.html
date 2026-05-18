@@ -1,0 +1,20 @@
+{%extends 'filterbase.html'%}
+
+{%load static%}
+
+{%block title%}Проекты{%endblock%}
+{%block linklist%}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+{%endblock%}
+{%block list%}
+    <section class='list'>
+        {%for project in projects%}
+            <div>
+                <h3>{{project.name}}</h3>
+                <p>{{project.discription}}</p>
+                <p>{{project.student.user.last_name}} {{project.student.user.first_name}}</p>
+                <a href="{{project.github_url}}">{{project.github_url}}</a>
+            </div>
+        {%endfor%}
+    </section>
+{%endblock%}

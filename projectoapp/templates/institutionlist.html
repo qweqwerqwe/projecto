@@ -1,0 +1,19 @@
+{%extends 'filterbase.html'%}
+
+{%load static%}
+
+{%block title%}Учебные заведения{%endblock%}
+{%block linklist%}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+{%endblock%}
+{%block list%}
+    <section class='list'>
+        {%for institution in institutions%}
+            <div>
+                <h3>{{institution.name}}</h3>
+                <p>{{institution.address}}</p>
+                <a href="{%url 'institutions_filter' id=institution.id%}" class="select-btn">Выбрать</a>
+            </div>
+        {%endfor%}
+    </section>
+{%endblock%}

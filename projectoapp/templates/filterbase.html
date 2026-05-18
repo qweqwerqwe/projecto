@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+{%load static%}
+
+{%block link%}
+    <link rel="stylesheet" href="{% static 'css/filterbase.css' %}">
+    {%block linklist%}{%endblock%}
+{%endblock%}
+{%block content%}
+    <section class='filter'>
+        <h2>Фильтр</h2>
+        {%if institution is None%}
+            <a href="{%url 'institutions'%}">Учебное заведение</a>
+        {%else%}
+            {{institution.name}}
+        {%endif%}
+        {%if student is None%}
+            <a href="{%url 'students'%}">Студент</a>
+        {%else%}
+            {{student.user.last_name}} {{student.user.first_name}}
+        {%endif%}
+        {%if has_filter is True%}
+            <a href="{%url 'projects'%}">Сбросить фильтр</a>
+        {%endif%}
+    </section>
+    {%block list%}{%endblock%}
+{%endblock%}
