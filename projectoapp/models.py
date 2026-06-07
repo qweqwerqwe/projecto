@@ -24,3 +24,9 @@ class Project(models.Model):
     discription = models.CharField(max_length=300, null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null=False)
     github_url = models.CharField(max_length=300, null=False)
+
+
+class Response(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
+    employer = models.ForeignKey(Employer, on_delete=models.CASCADE, null=False)
+    message = models.CharField(max_length=500, null=True)

@@ -1,14 +1,17 @@
 from django.urls import path
 
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import RedirectView
 
 from projectoapp.views import *
 
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/login/'), name='home'), 
     path('login/', LoginView.as_view(), name='login'), 
     path('logout/', LogoutView.as_view(), name='logout'), 
-    path('projects/', ProjectsListView.as_view(), name='projects'), 
+    path('projects/', ProjectsListView.as_view(), name='projects'),
+    path('projects/<int:id>/delete', ProjectDeleteView.as_view(), name='project_delete'),  
     path('students/', StudentListView.as_view(), name='students'), 
     path('institutions/', InstitutionListView.as_view(), name='institutions'), 
     path('students/<int:id>/', StudentFilterView.as_view(), name='students_filter'), 
@@ -16,5 +19,8 @@ urlpatterns = [
     path('student/', StudentCreationView.as_view(), name='student_form'), 
     path('institution/', InstitutionCreationView.as_view(), name='institution_form'), 
     path('employer/', EmployerCreationView.as_view(), name='employer_form'), 
-    path('project/', ProjectCreationView.as_view(), name='project_form')
+    path('project/', ProjectCreationView.as_view(), name='project_form'), 
+    path('projects/my/', MyProjectsView.as_view(), name='my_projects'), 
+    path('projects/<int:id>/response', ResponseView.as_view(), name='response'), 
+    path('responses/<int:user_id>/', ResponsesListView.as_view(), name='my_responses'), 
 ]

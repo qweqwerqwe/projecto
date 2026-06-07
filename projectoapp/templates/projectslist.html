@@ -9,12 +9,65 @@
 {%block list%}
     <section class='list'>
         {%for project in projects%}
-            <div>
+            {%if not request.GET.student_id and not request.GET.institution_id%}
+                <div>
                 <h3>{{project.name}}</h3>
                 <p>{{project.discription}}</p>
                 <p>{{project.student.user.last_name}} {{project.student.user.first_name}}</p>
                 <a href="{{project.github_url}}">{{project.github_url}}</a>
-            </div>
+                {% if user == project.student.user %}
+                    <form action="{% url 'project_delete' id=project.id%}" method="post" style="display: inline;" class="buttonform">
+                        {% csrf_token %}
+                        <button type="submit" style="display: inline; padding: 0;" class='deletebutton'>
+                            Удалить
+                        </button>
+                    </form>
+                {% endif %}
+                {% if user.groups.first.name == 'Employers' %}
+                    <form action="{% url 'response' id=project.id%}" method="post" style="display: inline;" class="buttonform">
+                        {% csrf_token %}
+                        <button type="submit" style="display: inline; padding: 0;" class='responsebutton
+                        {% if project in my_projects %}
+                             responsed' disabled>Вы откликнулись
+                        {% else %} 
+                            '> Откликнуться
+                        {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+                </div>
+            {%else%}
+                {% if not request.GET.student_id or project.student.id|stringformat:"s" == request.GET.student_id %}
+                    {% if project.student.institution.id|stringformat:"s" == request.GET.institution_id %}
+                        <div>
+                        <h3>{{project.name}}</h3>
+                        <p>{{project.discription}}</p>
+                        <p>{{project.student.user.last_name}} {{project.student.user.first_name}}</p>
+                        <a href="{{project.github_url}}">{{project.github_url}}</a>
+                        {% if user == project.student.user %}
+                            <form action="{% url 'project_delete' id=project.id%}" method="post" style="display: inline;" class="buttonform">
+                                {% csrf_token %}
+                                <button type="submit" style="display: inline; padding: 0;" class='deletebutton'>
+                                    Удалить
+                                </button>
+                            </form>
+                        {% endif %}
+                        {% if user.groups.first.name == 'Employers' %}
+                        <form action="{% url 'response' id=project.id%}" method="post" style="display: inline;" class="buttonform">
+                            {% csrf_token %}
+                            <button type="submit" style="display: inline; padding: 0;" class='responsebutton
+                            {% if project in my_projects %}
+                                 responsed' disabled>Вы откликнулись
+                            {% else %} 
+                                '> Откликнуться
+                            {% endif %}
+                            </button>
+                        </form>
+                        {% endif %}
+                        </div>
+                    {%endif%}
+                {%endif%}
+            {%endif%}
         {%endfor%}
     </section>
-{%endblock%}
+{%endblock%}    

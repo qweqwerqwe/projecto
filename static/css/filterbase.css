@@ -60,13 +60,6 @@
     font-size: 1rem;
 }
 
-/* Reset filter button */
-.filter a:last-child {
-    background: #fed7d7;
-    color: #e53e3e;
-    margin-left: auto;
-}
-
 .filter a:last-child:hover {
     background: #e53e3e;
     color: white;

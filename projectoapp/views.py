@@ -8,8 +8,9 @@ from rest_framework import generics
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from projectoapp.models import Employer, Institution, Project, Student
+from projectoapp.models import *
 from projectoapp import forms
+from django.db.models import Q
 
 
 class AbstractListView(ListView):
@@ -18,6 +19,12 @@ class AbstractListView(ListView):
 
         student_id = self.request.GET.get('student_id')
         institution_id = self.request.GET.get('institution_id')
+
+        context['my_projects']=list()
+        if self.request.user.is_authenticated:
+            my_responses = Response.objects.filter(employer__user=self.request.user)
+            for response in my_responses:
+                context['my_projects'].append(response.project)
 
         context['has_filter'] = False
 
@@ -66,7 +73,7 @@ class StudentListView(AbstractListView):
         institution_id = self.request.GET.get('institution_id')
 
         if institution_id:
-            queryset.filter(institution=institution_id)
+            queryset = queryset.filter(institution=institution_id)
 
         return queryset
 
@@ -162,7 +169,7 @@ class EmployerCreationView(View):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            user = User.objects.create(username=username, password=password)
+            user = User.objects.create_user(username=username, password=password)
             user.groups.add(Group.objects.get(name='Employers'))
 
             name = form.cleaned_data['name']
@@ -203,3 +210,61 @@ class ProjectCreationView(UserPassesTestMixin, View):
 
     def handle_no_permission(self):
         return redirect('login')
+    
+
+class ProjectDeleteView(View):
+    def post(self, request, id):
+        Project.objects.get(id=id).delete()
+
+        return redirect('projects')
+    
+
+class MyProjectsView(View):
+    def get(self, request):
+        student = Student.objects.get(user=request.user)
+        return redirect('students_filter', id=student.id)
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Students').exists()
+    
+    def handle_no_permission(self):
+        return redirect('login')    
+    
+
+class ResponseView(View):
+    def get(self, request):
+        return render(request, 'responseform.html', {'form': forms.ResponseForm()})
+
+    def post(self, request, id):
+        form = forms.ResponseForm(request.POST)
+        message = None
+
+        if form.is_valid():
+            message = form.cleaned_data['message']
+        else: return render(request, 'responseform.html', {'form': form})
+
+        employer = Employer.objects.get(user=request.user)
+        project = Project.objects.get(id=id)
+
+        Response.objects.create(project=project, employer=employer, message=message)
+
+        return redirect('projects')
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Employers').exists()
+    
+    def handle_no_permission(self):
+        return redirect('login') 
+    
+
+class ResponsesListView(ListView):
+    model = Response
+    template_name = 'responselist.html'
+    context_object_name = 'responses'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        user_id = self.kwargs.get('user_id')
+
+        return queryset.filter(Q(project__student__user__id=user_id) | Q(employer__user__id=user_id))

@@ -1,0 +1,19 @@
+{%extends 'filterbase.html'%}
+
+{%load static%}
+
+{%block title%}Отклики{%endblock%}
+{%block linklist%}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+{%endblock%}
+{%block list%}
+    <section class='list'>
+        {%for response in responses%}
+            <div>
+                <h3>{{response.project.name}}</h3>
+                <p>{{response.employer.name}}</p>
+                <p>{{response.message}}</p>
+            </div>
+        {%endfor%}
+    </section>
+{%endblock%}

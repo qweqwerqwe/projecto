@@ -20,7 +20,15 @@
                 {%if user.is_superuser == True%}
                     <a href="{%url 'institution_form'%}">Добавить учебное заведение</a>
                 {%endif%}
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {%if user.groups.first.name == 'Students'%}
+                    <a href="{%url 'project_form'%}">Добавить проект</a>
+                    <a href="{%url 'my_projects'%}">Мои проекты</a>
+                    <a href="{% url "my_responses" user_id=user.id%}">Мои отклики</a>
+                {%endif%}
+                {% if user.groups.first.name == 'Employers' %}
+                    <a href="{% url "my_responses" user_id=user.id%}">Мои отклики</a>
+                {% endif %}
+            <form action="{% url 'logout' %}" method="post" style="display: inline;" class="buttonform">
                 {% csrf_token %}
                 <button type="submit" style="display: inline; padding: 0;" class='logoutbutton'>
                     Выйти

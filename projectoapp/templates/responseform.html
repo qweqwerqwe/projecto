@@ -1,0 +1,9 @@
+{%extends 'base.html'%} 
+{%block title%} Отклик {%endblock%}
+{%block content%}
+<form method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">Откликнуться</button>
+</form>
+{%endblock%}

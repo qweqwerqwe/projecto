@@ -43,3 +43,7 @@ class ProjectForm(forms.ModelForm):
             'discription': 'Описание', 
             'github_url': 'Ссылка на проект'
         }
+
+
+class ResponseForm(forms.Form):
+    message = forms.CharField(max_length=500, label='Сообщение')

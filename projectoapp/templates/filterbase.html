@@ -15,7 +15,7 @@
             {{institution.name}}
         {%endif%}
         {%if student is None%}
-            <a href="{%url 'students'%}">Студент</a>
+            <a href="{%url 'students'%}{% if institution %}?institution_id={{institution.id}}{% endif %}">Студент</a>
         {%else%}
             {{student.user.last_name}} {{student.user.first_name}}
         {%endif%}

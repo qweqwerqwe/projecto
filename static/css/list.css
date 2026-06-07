@@ -102,12 +102,6 @@
     transform: translateX(5px);
 }
 
-/* GitHub link icon (optional - adds emoji) */
-.list a::before {
-    content: "🔗";
-    font-size: 0.9rem;
-}
-
 /* Select button styles */
 .list .select-btn {
     display: inline-block;
@@ -239,4 +233,22 @@
 
 .list::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+}
+
+.deletebutton{
+    color: white !important;
+    background: none !important;
+    background-color: #e53e3e !important;
+    padding:10px !important;
+}
+
+.responsebutton{
+    color: white !important;
+    background: none !important;
+    background-color: green !important;
+    padding:10px !important;
+}
+
+.responsed{
+    background-color: grey !important;
 }
